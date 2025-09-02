@@ -1,0 +1,33 @@
+export const STATE_CROPS: Record<string, string> = {
+  "Andhra Pradesh": "Rice (staple), jowar, bajra, maize, pulses, sugarcane, cotton, tobacco, fruits & vegetables",
+  "Arunachal Pradesh": "Significant irrigated area; crop-specific data limited",
+  Assam: "Tea leader; also rice, jute, pulses common",
+  Bihar: "Rice, wheat, maize; notable litchi",
+  Chhattisgarh: "“Rice Bowl of Central India”: rice dominates; plus millets, maize, vegetables, fruits, spices",
+  Goa: "Major crops not well detailed",
+  Gujarat: "Cotton, groundnut, castor, bajra, pigeon pea, green gram, sesame, paddy, maize, sugarcane",
+  Haryana: "Wheat, rice (paddy), sugarcane, sunflower",
+  "Himachal Pradesh": "Wheat, maize, rice, barley; cash crop: apple (Shimla, Kinnaur, Kullu)",
+  Jharkhand: "Major crops not detailed",
+  Karnataka:
+    "Rice, ragi, jowar, maize, pulses; cash crops: coffee (largest producer), sugarcane, cotton, coconut, arecanut, spices",
+  Kerala: "Spices (pepper, cardamom), coconut, rubber; plantation crops",
+  "Madhya Pradesh": "Soybean hub; wheat, gram, maize, pulses, oilseeds",
+  Maharashtra: "Sugarcane, cotton, sorghum, pearl millet, chickpea, soybean; horticulture (grapes, mangoes)",
+  Manipur: "Irrigated land stats available; specific crops not listed",
+  Meghalaya: "Irrigated land stats; specifics not listed",
+  Mizoram: "Irrigation data only; specifics not listed",
+  Nagaland: "Irrigation data only; specifics not listed",
+  Odisha: "Rice, pulses, maize",
+  Punjab: "Wheat, rice, cotton, sugarcane",
+  Rajasthan: "Millets (bajra), pulses, wheat, oilseeds, mustard",
+  Sikkim: "Irrigated area data available; specifics not listed",
+  "Tamil Nadu":
+    "Rice (Kaveri delta), sugarcane, spices, oilseeds, tapioca, flowers, fruits (banana, mango), rubber, Nilgiri tea",
+  Telangana: "Paddy, cotton, maize, red gram (tur), turmeric",
+  Tripura: "Irrigation data; crop specifics not listed",
+  "Uttar Pradesh": "Wheat, rice, sugarcane, pulses, potato",
+  Uttarakhand: "Not detailed",
+  "West Bengal":
+    "Largest rice producer; potato, jute, tea, sugarcane, wheat, maize, pulses, oilseeds, vegetables; fisheries",
+}

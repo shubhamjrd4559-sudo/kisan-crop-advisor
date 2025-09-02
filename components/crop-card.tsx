@@ -17,10 +17,21 @@ type Crop = {
   maturityDays: [number, number]
   yieldQtlPerAcre?: [number, number]
   notes?: string
+  varietiesByState?: Record<string, string[]>
 }
 
-export function CropCard({ crop, reason }: { crop: Crop & { score?: number }; reason: ExplainReason }) {
+export function CropCard({
+  crop,
+  reason,
+  stateName,
+}: {
+  crop: Crop & { score?: number }
+  reason: ExplainReason
+  stateName?: string
+}) {
   const scorePct = Math.round((reason.score ?? 0) * 100)
+  const fitsState = !!(stateName && crop.regions?.includes(stateName))
+  const stateVarieties = stateName ? crop.varietiesByState?.[stateName] : undefined
 
   return (
     <Card role="article" aria-label={`${crop.name} suitability`}>
@@ -43,6 +54,11 @@ export function CropCard({ crop, reason }: { crop: Crop & { score?: number }; re
               {crop.irrigation === "low" ? "Low water" : crop.irrigation === "medium" ? "Medium water" : "High water"}
             </Badge>
             <Badge variant="outline">{crop.soilTypes.join(", ")}</Badge>
+            {fitsState && (
+              <Badge variant="outline" className="border-primary/40 text-primary">
+                Fits well in {stateName}
+              </Badge>
+            )}
           </div>
         </div>
       </CardHeader>
@@ -66,6 +82,22 @@ export function CropCard({ crop, reason }: { crop: Crop & { score?: number }; re
             </>
           )}
         </div>
+
+        {stateVarieties && stateVarieties.length > 0 && (
+          <>
+            <Separator />
+            <div>
+              <p className="text-sm font-medium">Recommended varieties in {stateName}</p>
+              <div className="mt-2 flex flex-wrap gap-2">
+                {stateVarieties.map((v) => (
+                  <Badge key={v} variant="outline">
+                    {v}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+          </>
+        )}
 
         {crop.notes && (
           <>

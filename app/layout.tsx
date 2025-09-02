@@ -4,6 +4,9 @@ import { Playfair_Display, Source_Sans_3 } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { Suspense } from "react"
 import "./globals.css"
+import NavArrows from "@/components/nav-arrows"
+import { I18nProvider } from "@/components/i18n-provider"
+import LanguageSwitcher from "@/components/language-switcher"
 
 const sourceSans = Source_Sans_3({
   subsets: ["latin"],
@@ -33,8 +36,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${sourceSans.variable} ${playfair.variable} antialiased`}>
       <body className="font-sans">
-        <Suspense fallback={null}>{children}</Suspense>
-        <Analytics />
+        <I18nProvider>
+          <LanguageSwitcher />
+          <Suspense fallback={null}>{children}</Suspense>
+          <NavArrows />
+          <Analytics />
+        </I18nProvider>
       </body>
     </html>
   )

@@ -68,6 +68,10 @@ export function recommendCrops(input: CropFormValues, dataset: Crop[]) {
 
     if (seasonMatch === 1) positives.push(`Season match: ${input.season.toUpperCase()}`)
 
+    if (regionMatch === 1) {
+      positives.push(`Commonly grown in ${input.state}`)
+    }
+
     if (input.organicPreferred) {
       if (crop.irrigation !== "high") positives.push("Organic-friendly management possible")
       else cautions.push("High water crops can be harder in organic systems")

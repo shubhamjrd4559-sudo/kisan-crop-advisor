@@ -43,7 +43,7 @@ export function CropAdvisor() {
         )}
 
         {results.map((crop) => (
-          <CropCard key={crop.name} crop={crop} reason={explanations[crop.name]} />
+          <CropCard key={crop.name} crop={crop} reason={explanations[crop.name]} stateName={values?.state} />
         ))}
       </div>
     </div>

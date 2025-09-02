@@ -12,6 +12,7 @@ export type Crop = {
   maturityDays: [number, number]
   yieldQtlPerAcre?: [number, number]
   notes?: string
+  varietiesByState?: Record<string, string[]>
 }
 
 export const crops: Crop[] = [
@@ -29,6 +30,12 @@ export const crops: Crop[] = [
     yieldQtlPerAcre: [12, 20],
     notes: "Timely irrigation at critical stages boosts yield.",
     image: "/wheat-ears.png",
+    varietiesByState: {
+      "Uttar Pradesh": ["HD 2967", "PBW 343"],
+      Punjab: ["PBW 725", "HD 3086"],
+      Rajasthan: ["Raj 4079"],
+      "Madhya Pradesh": ["HI 1544 (Pusa Gold)"],
+    },
   },
   {
     name: "Rice (Paddy)",
@@ -44,6 +51,13 @@ export const crops: Crop[] = [
     yieldQtlPerAcre: [15, 30],
     notes: "Requires continuous water availability; puddling helps in clayey soils.",
     image: "/lush-rice-paddy.png",
+    varietiesByState: {
+      "West Bengal": ["Swarna (MTU 7029)", "IR 36"],
+      Punjab: ["PR 126", "PR 121"],
+      "Andhra Pradesh": ["BPT 5204 (Sona Masuri)"],
+      "Tamil Nadu": ["ADT 43", "CO 51"],
+      Bihar: ["Sahbhagi Dhan"],
+    },
   },
   {
     name: "Maize",
@@ -59,6 +73,13 @@ export const crops: Crop[] = [
     yieldQtlPerAcre: [10, 18],
     notes: "Good for diversified rotations; tolerates moderate rainfall.",
     image: "/maize-cobs.png",
+    varietiesByState: {
+      Karnataka: ["NAH-2049", "DHM 117"],
+      Bihar: ["HQPM-1"],
+      Maharashtra: ["Pioneer 3369"],
+      "Andhra Pradesh": ["DHM-103"],
+      "Uttar Pradesh": ["PMH-1"],
+    },
   },
   {
     name: "Cotton",
@@ -74,6 +95,12 @@ export const crops: Crop[] = [
     yieldQtlPerAcre: [4, 8],
     notes: "Best in black soils with good drainage; careful pest monitoring required.",
     image: "/cotton-boll.png",
+    varietiesByState: {
+      Maharashtra: ["NHH-44", "RCH 2 BG II"],
+      Gujarat: ["G.Cot-16"],
+      Telangana: ["RCH 134 BG II"],
+      Punjab: ["RCH 773"],
+    },
   },
   {
     name: "Chickpea (Gram)",
@@ -89,6 +116,12 @@ export const crops: Crop[] = [
     yieldQtlPerAcre: [5, 10],
     notes: "Suited for areas with limited irrigation; improves soil fertility.",
     image: "/chickpea-plant.png",
+    varietiesByState: {
+      "Madhya Pradesh": ["JG 11", "JG 63"],
+      Rajasthan: ["RSG 888"],
+      "Uttar Pradesh": ["KWR 108"],
+      Maharashtra: ["Vijay"],
+    },
   },
   {
     name: "Sorghum (Jowar)",
@@ -104,5 +137,12 @@ export const crops: Crop[] = [
     yieldQtlPerAcre: [5, 12],
     notes: "Drought-tolerant option for low rainfall regions.",
     image: "/sorghum-heads.png",
+    varietiesByState: {
+      Maharashtra: ["CSH 14", "SPV 462"],
+      Karnataka: ["M 35-1", "CSV 15"],
+      "Andhra Pradesh": ["CSV 20"],
+      "Tamil Nadu": ["CO 26"],
+      Rajasthan: ["RSH 1"],
+    },
   },
 ]
