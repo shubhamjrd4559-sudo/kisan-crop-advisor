@@ -10,6 +10,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Slider } from "@/components/ui/slider"
 import { Switch } from "@/components/ui/switch"
 import { Separator } from "@/components/ui/separator"
+import { MapPin, Loader2 } from "lucide-react"
+import { useToast } from "@/hooks/use-toast"
 
 export type CropFormValues = {
   state: string
@@ -34,6 +36,7 @@ const STATES = [
   "Andhra Pradesh",
   "Gujarat",
   "Madhya Pradesh",
+  "Jharkhand", // Added Jharkhand to states list
 ]
 
 const SOILS = ["Alluvial", "Black", "Red", "Laterite", "Sandy", "Loamy", "Clayey"]
@@ -62,6 +65,33 @@ const STATE_PROFILES: Record<string, StateProfile> = {
   "Andhra Pradesh": { phRange: [6.0, 8.0], rainfallRange: [700, 1100], suggestedSoils: ["Red", "Black", "Loamy"] },
   Gujarat: { phRange: [6.5, 8.5], rainfallRange: [400, 1000], suggestedSoils: ["Black", "Alluvial"] },
   "Madhya Pradesh": { phRange: [6.0, 8.0], rainfallRange: [600, 1200], suggestedSoils: ["Black", "Red"] },
+  Jharkhand: { phRange: [5.5, 7.0], rainfallRange: [1000, 1400], suggestedSoils: ["Red", "Laterite", "Alluvial"] }, // Added Jharkhand profile
+}
+
+const LOCATION_TO_STATE: Record<string, { lat: [number, number]; lng: [number, number]; state: string }[]> = {
+  Jharkhand: [{ lat: [21.5, 25.5], lng: [83.5, 87.5], state: "Jharkhand" }],
+  Punjab: [{ lat: [29.5, 32.5], lng: [73.5, 76.5], state: "Punjab" }],
+  Maharashtra: [{ lat: [15.5, 22.0], lng: [72.5, 80.5], state: "Maharashtra" }],
+  "Tamil Nadu": [{ lat: [8.0, 13.5], lng: [76.5, 80.5], state: "Tamil Nadu" }],
+  "West Bengal": [{ lat: [21.5, 27.5], lng: [85.5, 89.5], state: "West Bengal" }],
+  Karnataka: [{ lat: [11.5, 18.5], lng: [74.0, 78.5], state: "Karnataka" }],
+  "Uttar Pradesh": [{ lat: [23.5, 30.5], lng: [77.0, 84.5], state: "Uttar Pradesh" }],
+  Bihar: [{ lat: [24.0, 27.5], lng: [83.5, 88.5], state: "Bihar" }],
+  Rajasthan: [{ lat: [23.0, 30.5], lng: [69.5, 78.5], state: "Rajasthan" }],
+  Gujarat: [{ lat: [20.0, 24.5], lng: [68.0, 74.5], state: "Gujarat" }],
+  "Madhya Pradesh": [{ lat: [21.0, 26.5], lng: [74.0, 82.5], state: "Madhya Pradesh" }],
+  "Andhra Pradesh": [{ lat: [12.5, 19.5], lng: [76.5, 84.5], state: "Andhra Pradesh" }],
+}
+
+function detectStateFromCoordinates(lat: number, lng: number): string | null {
+  for (const [stateName, regions] of Object.entries(LOCATION_TO_STATE)) {
+    for (const region of regions) {
+      if (lat >= region.lat[0] && lat <= region.lat[1] && lng >= region.lng[0] && lng <= region.lng[1]) {
+        return region.state
+      }
+    }
+  }
+  return null
 }
 
 export function CropForm({ onSubmit }: { onSubmit: (v: CropFormValues) => void }) {
@@ -73,9 +103,11 @@ export function CropForm({ onSubmit }: { onSubmit: (v: CropFormValues) => void }
   const [season, setSeason] = useState<CropFormValues["season"]>("kharif")
   const [landSizeAcres, setLandSizeAcres] = useState(2)
   const [organicPreferred, setOrganicPreferred] = useState(false)
+  const [isLoadingLocation, setIsLoadingLocation] = useState(false) // Added loading state for location
 
   const profile = useMemo(() => STATE_PROFILES[state] ?? DEFAULT_PROFILE, [state])
   const { t } = useI18n() // get translator
+  const { toast } = useToast()
 
   useEffect(() => {
     const [pMin, pMax] = profile.phRange
@@ -91,6 +123,50 @@ export function CropForm({ onSubmit }: { onSubmit: (v: CropFormValues) => void }
     }
   }, [state])
 
+  async function handleLocationDetection() {
+    if (!navigator.geolocation) {
+      toast({
+        title: "Location not supported",
+        description: "Your browser doesn't support location detection.",
+        variant: "destructive",
+      })
+      return
+    }
+
+    setIsLoadingLocation(true)
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords
+        const detectedState = detectStateFromCoordinates(latitude, longitude)
+
+        if (detectedState) {
+          setState(detectedState)
+          toast({
+            title: "Location detected!",
+            description: `Found your location in ${detectedState}. Form updated with local recommendations.`,
+          })
+        } else {
+          toast({
+            title: "Location detected",
+            description: "Couldn't match your location to a specific state. Please select manually.",
+          })
+        }
+        setIsLoadingLocation(false)
+      },
+      (error) => {
+        console.error("Geolocation error:", error)
+        toast({
+          title: "Location access denied",
+          description: "Please allow location access or select your state manually.",
+          variant: "destructive",
+        })
+        setIsLoadingLocation(false)
+      },
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 300000 },
+    )
+  }
+
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     onSubmit({ state, soilType, ph, rainfall, irrigation, season, landSizeAcres, organicPreferred })
@@ -98,9 +174,22 @@ export function CropForm({ onSubmit }: { onSubmit: (v: CropFormValues) => void }
 
   return (
     <form className="space-y-5" onSubmit={handleSubmit} aria-labelledby="crop-form-title">
-      <h2 id="crop-form-title" className="text-lg font-semibold">
-        {t("form.title", "Farm details")}
-      </h2>
+      <div className="flex items-center justify-between">
+        <h2 id="crop-form-title" className="text-lg font-semibold">
+          {t("form.title", "Farm details")}
+        </h2>
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={handleLocationDetection}
+          disabled={isLoadingLocation}
+          className="flex items-center gap-2 bg-transparent"
+        >
+          {isLoadingLocation ? <Loader2 className="h-4 w-4 animate-spin" /> : <MapPin className="h-4 w-4" />}
+          {t("form.aiLocation", "AI Location")}
+        </Button>
+      </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-2">

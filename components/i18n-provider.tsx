@@ -3,7 +3,7 @@
 import type React from "react"
 import { createContext, useContext, useEffect, useMemo, useState } from "react"
 
-type Lang = "en" | "hi"
+type Lang = "en" | "hi" | "pa"
 type Dict = Record<string, string>
 
 const en: Dict = {
@@ -135,11 +135,78 @@ const hi: Dict = {
   "home.state.helper": "आपकी पसंद के अनुसार भाषाएँ और फ़सल हाइलाइट्स बदलते हैं।",
   "home.state.languagesLabel": "राजकीय भाषा(एँ)",
   "home.state.uiNote": "UI अभी अंग्रेज़ी/हिंग्लिश में है; आगे और भाषाएँ जोड़ी जा सकती हैं।",
-  "home.state.cropsLabel": "मुख्य फ़सलें / हाइलाइट्स",
-  "home.state.cta.recommendPrefix": "इसके लिए सिफारिशें देखें:",
-  "home.state.cta.community": "कम्युनिटी खोलें",
+  "home.state.cropsLabel": "मुख्य फ़सलें / हਾਈਲਾਈਟਸ",
+  "home.state.cta.recommendPrefix": "इसके लिए सिफारਸ਼ें देखें:",
+  "home.state.cta.community": "कਮ्युनिटी खोलें",
 
   "site.footer": "किसानों के लिए • सरल, सुलभ और मोबाइल‑अनुकूल",
+}
+
+const pa: Dict = {
+  "site.title": "ਕਿਸਾਨ ਕ੍ਰਾਪ ਐਡਵਾਈਜ਼ਰ",
+  "site.tagline": "ਆਪਣੀ ਜ਼ਮੀਨ ਅਤੇ ਮੌਸਮ ਲਈ ਸਹੀ ਫਸਲ ਲੱਭੋ",
+  "hero.title": "ਆਪਣੀ ਜ਼ਮੀਨ ਅਤੇ ਇਲਾਕੇ ਲਈ ਸਹੀ ਫਸਲ ਚੁਣੋ",
+  "hero.desc": "ਮਿੱਟੀ, pH, ਵਰਖਾ, ਸਿੰਚਾਈ, ਸੀਜ਼ਨ ਅਤੇ ਲੋਕੇਸ਼ਨ ਭਰੋ। ਅਸੀਂ ਸਪਸ਼ਟ ਕਾਰਨਾਂ ਤੇ ਟਿੱਪਸ ਨਾਲ ਬਿਹਤਰ ਫਸਲਾਂ ਸੁਝਾਅ ਕਰਾਂਗੇ।",
+  "cta.getAdvice": "ਫਸਲ ਸਲਾਹ ਲਓ",
+  "cta.howWorks": "ਕਿਵੇਂ ਕੰਮ ਕਰਦਾ ਹੈ",
+  "recommend.title": "ਆਪਣੀ ਜ਼ਮੀਨ ਲਈ ਫਸਲ ਸਲਾਹ ਲਓ",
+  "recommend.desc": "ਹੇਠਾਂ ਵੇਰਵੇ ਭਰੋ। ਅਸੀਂ ਮਿੱਟੀ, ਵਰਖਾ, ਸੀਜ਼ਨ, ਸਿੰਚਾਈ ਅਤੇ ਇਲਾਕੇ ਅਨੁਸਾਰ ਫਸਲਾਂ ਦਾ ਸਕੋਰ ਕਰਾਂਗੇ।",
+  "cta.shareRec": "ਆਪਣੀ ਸਿਫਾਰਸ਼ ਸਾਂਝੀ ਕਰੋ",
+  "referenceMaps.title": "ਸੰਦਰਭ ਨਕਸ਼ੇ",
+  "referenceMaps.desc": "ਭਾਰਤ ਵਿੱਚ ਮੁੱਖ ਫਸਲ ਪ੍ਰਣਾਲੀਆਂ ਅਤੇ ਮਿੱਟੀ ਦੇ ਕਿਸਮਾਂ ਦੇ ਨਕਸ਼ੇ ਵੇਖੋ ਤਾਂ ਜੋ ਖੇਤਰ ਅਨੁਕੂਲਤਾ ਸਮਝ ਸਕੋ।",
+  "maps.croppingSystems": "ਭਾਰਤ ਵਿੱਚ ਮੁੱਖ ਫਸਲ ਪ੍ਰਣਾਲੀਆਂ",
+  "maps.soilTypes": "ਭਾਰਤ ਵਿੱਚ ਮੁੱਖ ਮਿੱਟੀ ਦੇ ਕਿਸਮ",
+
+  "form.title": "ਖੇਤ ਦੀ ਜਾਣਕਾਰੀ",
+  "form.state": "ਰਾਜ/ਖੇਤਰ",
+  "form.state.placeholder": "ਰਾਜ ਚੁਣੋ",
+  "form.soil": "ਮਿੱਟੀ ਦਾ ਕਿਸਮ",
+  "form.soil.placeholder": "ਮਿੱਟੀ ਚੁਣੋ",
+  "form.ph": "ਮਿੱਟੀ ਦਾ pH",
+  "form.rainfall": "ਸਲਾਨਾ ਵਰਖਾ (ਮੀਮੀ)",
+  "form.irrigation": "ਸਿੰਚਾਈ ਉਪਲਬਧਤਾ",
+  "form.irrigation.none": "ਕੋਈ ਨਹੀਂ",
+  "form.irrigation.limited": "ਸੀਮਿਤ",
+  "form.irrigation.reliable": "ਭਰੋਸੇਯੋਗ",
+  "form.season": "ਸੀਜ਼ਨ",
+  "form.season.kharif": "ਖਰੀਫ (ਮਾਨਸੂਨ)",
+  "form.season.rabi": "ਰਬੀ (ਸਰਦੀ)",
+  "form.season.zaid": "ਜ਼ਾਇਦ (ਗਰਮੀ)",
+  "form.land": "ਜ਼ਮੀਨ ਦਾ ਆਕਾਰ (ਏਕੜ)",
+  "form.organic": "ਜੈਵਿਕ‑ਅਨੁਕੂਲ ਫਸਲਾਂ ਨੂੰ ਤਰਜੀਹ",
+  "form.submit": "ਸਿਫਾਰਸ਼ਾਂ ਵੇਖੋ",
+  "form.note": "ਉੱਚ ਕਾਂਟ੍ਰਾਸਟ, ਮੋਬਾਈਲ‑ਅਨੁਕੂਲ",
+
+  "form.recommendedFor": "ਲਈ ਸਿਫਾਰਸ਼ੀ",
+  "form.recommended.ph": "pH",
+  "form.recommended.rainfall": "ਵਰਖਾ",
+  "form.recommended.mm": "ਮੀਮੀ",
+  "form.recommended.suggestedSoils": "ਸੁਝਾਈਆਂ ਮਿੱਟੀਆਂ",
+
+  "home.how.title": "ਕਿਵੇਂ ਕੰਮ ਕਰਦਾ ਹੈ",
+  "home.how.1.title": "1. ਵੇਰਵੇ ਭਰੋ",
+  "home.how.1.desc": "ਮਿੱਟੀ, pH, ਵਰਖਾ, ਸਿੰਚਾਈ, ਸੀਜ਼ਨ, ਲੋਕੇਸ਼ਨ",
+  "home.how.2.title": "2. ਮੇਲ ਵੇਖੋ",
+  "home.how.2.desc": "ਤੁਹਾਡੀ ਜ਼ਮੀਨ ਅਤੇ ਇਲਾਕੇ ਲਈ ਸਭ ਤੋਂ ਉਚਿਤ ਫਸਲਾਂ",
+  "home.how.3.title": "3. ਸਿੱਖੋ ਅਤੇ ਯੋਜਨਾ ਬਣਾਓ",
+  "home.how.3.desc": "ਤੇਜ਼ ਟਿੱਪਸ, ਸਿੰਚਾਈ ਦੀ ਲੋੜ ਅਤੇ ਸੀਜ਼ਨ ਫਿਟ",
+
+  "home.photos.title": "ਖੇਤ ਦੀਆਂ ਤਸਵੀਰਾਂ",
+  "home.photos.1.caption": "ਬੁਆਈ ਲਈ ਤਿਆਰ ਉਪਜਾਊ ਖੇਤ",
+  "home.photos.2.caption": "ਹਰ ਫਸਲ ਦੀ ਸਫਲਤਾ ਦੇ ਕੇਂਦਰ ਵਿੱਚ ਕਿਸਾਨ",
+  "home.photos.3.caption": "ਵਧੀਆ ਪੈਦਾਵਾਰ ਲਈ ਮਿੱਟੀ ਦੀ ਬਣਾਵਟ ਅਤੇ ਸਿਹਤ ਮਹੱਤਵਪੂਰਨ",
+
+  "home.state.title": "ਤੁਹਾਡਾ ਰਾਜ, ਭਾਸ਼ਾਵਾਂ ਅਤੇ ਫਸਲਾਂ",
+  "home.state.cardTitle": "ਰਾਜ ਅਤੇ ਭਾਸ਼ਾ ਪਸੰਦਾਂ",
+  "home.state.selectLabel": "ਆਪਣਾ ਰਾਜ ਚੁਣੋ",
+  "home.state.helper": "ਤੁਹਾਡੀ ਚੋਣ ਅਨੁਸਾਰ ਭਾਸ਼ਾਵਾਂ ਅਤੇ ਫਸਲ ਹਾਈਲਾਈਟਸ ਬਦਲਦੇ ਹਨ।",
+  "home.state.languagesLabel": "ਅਧਿਕਾਰਕ ਭਾਸ਼ਾ(ਵਾਂ)",
+  "home.state.uiNote": "UI ਇਸ ਵੇਲੇ ਅੰਗਰੇਜ਼ੀ/ਹਿੰਗਲਿਸ਼ ਵਿੱਚ ਹੈ; ਹੋਰ ਭਾਸ਼ਾਵਾਂ ਬਾਅਦ ਵਿੱਚ ਜੋੜਾਂਗੇ।",
+  "home.state.cropsLabel": "ਮੁੱਖ ਫਸਲਾਂ / ਹਾਈਲਾਈਟਸ",
+  "home.state.cta.recommendPrefix": "ਇਸ ਲਈ ਸਿਫਾਰਸ਼ਾਂ ਵੇਖੋ:",
+  "home.state.cta.community": "ਕਮਿਊਨਟੀ ਖੋਲ੍ਹੋ",
+
+  "site.footer": "ਕਿਸਾਨਾਂ ਲਈ • ਸਧਾਰਣ, ਸੁਗਮ ਅਤੇ ਮੋਬਾਈਲ‑ਪਹਿਲਾਂ",
 }
 
 type I18nContextValue = {
@@ -155,7 +222,7 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const saved = (typeof window !== "undefined" && localStorage.getItem("lang")) as Lang | null
-    if (saved === "en" || saved === "hi") setLang(saved)
+    if (saved === "en" || saved === "hi" || saved === "pa") setLang(saved)
   }, [])
 
   useEffect(() => {
@@ -168,7 +235,7 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
   }, [lang])
 
   const t = useMemo(() => {
-    const dict = lang === "hi" ? hi : en
+    const dict = lang === "hi" ? hi : lang === "pa" ? pa : en
     return (key: string, fallback?: string) => dict[key] ?? fallback ?? key
   }, [lang])
 
