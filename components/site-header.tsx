@@ -1,6 +1,6 @@
 'use client'
 
-import { useI18n } from '@/contexts/i18n-context'
+import { useI18n } from '@/components/i18n-provider'
 import LanguageSwitcher from './language-switcher'
 import { Button } from './ui/button'
 import Link from 'next/link'
