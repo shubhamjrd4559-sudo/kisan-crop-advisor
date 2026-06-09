@@ -1,5 +1,3 @@
-This is my first Git Repository
-<br>
 # Farmer crop advisor
 
 *Automatically synced with your [v0.app](https://v0.app) deployments*
